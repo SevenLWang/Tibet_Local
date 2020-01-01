@@ -2,6 +2,7 @@ from glob import glob
 import os
 import pandas as pd
 from obspy import UTCDateTime
+from tqdm import tqdm
 
 datadir = '/data_1/njdataX1/LOCAL_X1_YOUYIMS/'
 
@@ -10,7 +11,7 @@ events = pd.read_table('/work/wang_li/Program/LOCAL_X1_YOUYIMS/IRIS_local_catalo
 
 ddir = '/work/wang_li/Project/Tibet/Data'
 
-for d in glob(datadir + '20*'):
+for d in tqdm(glob(datadir + '20*')):
     datetime = os.path.basename(d)
     #print(datetime)
     yy=datetime[0:4];mon=datetime[4:6];dd=datetime[6:8];hh=datetime[8:10];mm=datetime[10:12];ss=datetime[12:14];
@@ -29,9 +30,9 @@ for d in glob(datadir + '20*'):
             lat, lon = events['Latitude'][i], events['Longitude'][i]
             if (lat < 29 and lat >22 and lon < 107 and lon > 98):
                 command = "cp -r %s %s" % (d, ddir)
-                print(command)
+                #print(command)
                 os.system(command)
-                print('success')
+                #print('success')
             else:
                 continue
         else:
